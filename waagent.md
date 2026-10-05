@@ -336,14 +336,6 @@ The agent is **advisory with assisted remediation — not autonomous**. Human ju
 
 ---
 
-## The bottom line
-
-- **For C-suite:** continuous, goal-aligned optimization across cost, security, resilience, and performance — delivered by AWS Support, gated behind Business+ support. It converts best-practice governance from an occasional project into an operational signal, with trade-offs made explicit before you spend.
-- **For principal engineers & architects:** read your live environment *and* your IaC, get recommendations at resource/application/architecture levels with ready-to-run SSM/CLI/IaC fixes, and keep humans firmly in the approval loop.
-- **The posture to adopt:** treat it as a **tireless first-pass reviewer**. Let it find and draft; keep your architects deciding and your pipelines deploying.
-
----
-
 *Sources: AWS Well-Architected Agent preview announcement (Oct 2026) and the AWS Well-Architected User Guide. Content is paraphrased from official AWS documentation; this is a preview service, so verify current capabilities, Regions, pillars, and pricing/support eligibility against the official docs before adopting. Content was rephrased for compliance with licensing restrictions.*
 
 **References:** [Preview announcement](https://aws.amazon.com/about-aws/whats-new/2026/10/aws-well-architected-agent/) · [What is WA Agent (User Guide)](https://docs.aws.amazon.com/wellarchitected/latest/userguide/agent.html) · [Concepts & terminology](https://docs.aws.amazon.com/wellarchitected/latest/userguide/agent-concepts.html)

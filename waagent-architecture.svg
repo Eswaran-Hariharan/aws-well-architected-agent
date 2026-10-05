@@ -62,9 +62,13 @@
     <path d="M800,260 H838" marker-end="url(#wa)"/>
   </g>
 
-  <!-- access note -->
-  <text x="34" y="300" class="note" font-weight="700" fill="#2f82d8">IAM:</text>
-  <text x="78" y="300" class="note">Execution role (assumes access roles) + per-account Access roles — both READ-ONLY.</text>
-  <text x="34" y="320" class="note">Views: by pillar · by level · by business goal · by account/Region — one report, many viewpoints (engineer ↔ leadership).</text>
+  <!-- access note (kept within the left column so it never crosses the Engine box) -->
+  <text x="40" y="298" class="note" font-weight="700" fill="#2f82d8">IAM (both READ-ONLY):</text>
+  <text x="40" y="316" class="s">Execution role assumes per-account</text>
+  <text x="40" y="332" class="s">Access roles — discovery only.</text>
+  <text x="40" y="360" class="note" font-weight="700" fill="#2f82d8">Views / viewpoints:</text>
+  <text x="40" y="378" class="s">by pillar · by level · by business goal</text>
+  <text x="40" y="394" class="s">· by account/Region.</text>
+  <text x="40" y="410" class="s">One report → engineer ↔ leadership.</text>
   <text x="34" y="520" class="note" font-style="italic">Preview (Oct 2026) · requires AWS Support Business+ or higher · profile hosted in us-east-1 / us-east-2 / us-west-2.  ·  by eswaran-hariharan</text>
 </svg>
