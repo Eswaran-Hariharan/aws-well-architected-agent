@@ -4,7 +4,7 @@
 
 > **In a sentence:** AWS has turned its Well-Architected Framework from a periodic, manual questionnaire into an **always-on AI service** that continuously inspects your live environment *and* your infrastructure-as-code, then hands back prioritized, business-goal-ranked recommendations — many with ready-to-run fixes attached.
 
-Announced in **preview (October 2026)**, the **AWS Well-Architected Agent (WA Agent)** is positioned by AWS as the **next-generation evolution of AWS Trusted Advisor and the Well-Architected Tool**. This guide is written for the people who have to decide whether to adopt it — **architects, principal engineers, and C-suite sponsors** — and it covers the whole picture: what it does, how to adopt it, how reports and viewpoints work, how remediation happens, and where humans still have to stay in the loop.
+Announced in **preview (October 2026)**, the **AWS Well-Architected Agent (WA Agent)** is positioned by AWS as the **next-generation evolution of AWS Trusted Advisor and the Well-Architected Tool**. This guide covers the whole picture: what it does, how to adopt it, how reports and viewpoints work, how remediation happens, and where humans still have to stay in the loop.
 
 ![AWS Well-Architected Agent — how it works](waagent-architecture.svg)
 
