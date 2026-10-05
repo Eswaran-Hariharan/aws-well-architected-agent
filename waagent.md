@@ -38,7 +38,36 @@ The agent analyzes your infrastructure across four pillars:
 | **Resilience / Reliability** | Single points of failure, missing multi-AZ/failover, recovery posture |
 | **Performance** | Bottlenecks, inefficient resource choices |
 
-*(Note: AWS's Well-Architected Framework has six pillars; the Agent preview focuses analysis on these four.)*
+*(Note: labels above are the guide's shorthand. The official pillar names are **Reliability** and **Performance Efficiency** — this guide uses "Resilience / Reliability" and "Performance" for readability.)*
+
+### The six pillars vs. the four analyzed (what's in and out of scope)
+AWS's Well-Architected Framework defines **six** pillars. The Agent preview analyzes **four** of them. Knowing the gap up front is part of an honest adoption decision:
+
+| # | Well-Architected pillar | In the Agent preview? | Why / why not |
+|---|-------------------------|:---------------------:|---------------|
+| 1 | **Operational Excellence** | ❌ Not in preview | Leans on process, runbook culture, and team practices — hard to judge from read-only resource/config scans alone |
+| 2 | **Security** | ✅ Analyzed | Misconfigurations, exposure, and weak controls are directly observable in resource config |
+| 3 | **Reliability** | ✅ Analyzed | SPOFs, multi-AZ/failover gaps, recovery posture are inferable from topology + config |
+| 4 | **Performance Efficiency** | ✅ Analyzed | Bottlenecks and inefficient resource choices show up in utilization metrics |
+| 5 | **Cost Optimization** | ✅ Analyzed | Waste, idle, and right-sizing are measurable from usage data |
+| 6 | **Sustainability** | ❌ Not in preview | Depends on carbon/energy and utilization-efficiency data that isn't first-class in the preview |
+
+```mermaid
+flowchart TB
+    WA["AWS Well-Architected Framework<br/>6 pillars"]
+    WA --> IN["✅ Analyzed by the Agent (preview)"]
+    WA --> OUT["❌ Not analyzed in preview"]
+    IN --> C["💰 Cost Optimization"]
+    IN --> S["🔒 Security"]
+    IN --> R["🛡️ Reliability / Resilience"]
+    IN --> P["⚡ Performance Efficiency"]
+    OUT --> OE["⚙️ Operational Excellence"]
+    OUT --> SU["🌱 Sustainability"]
+    classDef excluded fill:#e5e7eb,stroke:#9ca3af,color:#6b7280,stroke-dasharray:4 3;
+    class OE,SU,OUT excluded;
+```
+
+> **Bottom line on pillars:** nothing is "missing" by mistake — the preview deliberately targets the four pillars most assessable from read-only telemetry. If Operational Excellence or Sustainability are first-class requirements for you today, keep using the Well-Architected **Tool** questionnaire for those two until the Agent expands coverage.
 
 ### Three levels of recommendation (the "scope" dimension)
 This is the key mental model. The agent reasons at three altitudes:
@@ -60,20 +89,75 @@ The agent inspects configurations, utilization metrics, and application topology
 
 ```mermaid
 flowchart TB
-    subgraph Setup["You define once"]
-        P[Agent Profile<br/>accounts · regions · pillars · business goals]
-        AC[Application Context<br/>criticality · industry · tags · topology]
+    subgraph INPUTS["① INPUTS you provide"]
+        direction LR
+        AP["Agent Profile<br/>accounts · regions · pillars · business goals"]
+        AC["Application Context<br/>criticality · industry · tags · topology"]
+        IAC["IaC source (optional)<br/>Terraform · CloudFormation · CDK (S3 URI)"]
+        IAM["IAM: Execution + Access roles<br/>(read-only)"]
     end
-    P --> SCAN
-    AC --> SCAN
-    subgraph Engine["AWS WA Agent (AI engine)"]
-        SCAN[Scan resources<br/>read-only] --> ANALYZE[Analyze vs Well-Architected<br/>+ ingest Trusted Advisor]
-        ANALYZE --> RANK[Rank by business goals<br/>impact × effort]
+
+    INPUTS --> ENGINE
+
+    subgraph ENGINE["② WA AGENT ENGINE (read-only, AI)"]
+        direction TB
+        SCAN["Scan live resources<br/>60+ services · up to 100 accounts · all commercial regions"]
+        INGEST["Ingest Trusted Advisor findings"]
+        ANALYZE["Analyze vs Well-Architected best practices"]
+        RANK["Rank by business goals<br/>impact × effort + cross-pillar trade-offs"]
+        SCAN --> ANALYZE
+        INGEST --> ANALYZE
+        ANALYZE --> RANK
     end
-    RANK --> REC[Prioritized recommendations<br/>Resource · Application · Architecture]
-    REC --> FIX[Ready-to-deploy remediation<br/>SSM runbooks · CLI · IaC updates]
-    FIX --> HUMAN[You review &amp; approve]
-    HUMAN --> DEPLOY[Deploy the change]
+
+    ENGINE --> PILLARS
+
+    subgraph PILLARS["③ PILLAR SCOPE — 4 of 6 analyzed in preview"]
+        direction LR
+        C["💰 Cost ✅"]
+        S["🔒 Security ✅"]
+        R["🛡️ Reliability ✅"]
+        P["⚡ Performance ✅"]
+        OE["⚙️ Operational Excellence ❌"]
+        SU["🌱 Sustainability ❌"]
+    end
+
+    PILLARS --> LEVELS
+
+    subgraph LEVELS["④ RECOMMENDATION LEVELS"]
+        direction LR
+        L1["Resource<br/>single resource"]
+        L2["Application (beta)<br/>group of related resources"]
+        L3["Architecture<br/>IaC → corrected templates"]
+    end
+
+    LEVELS --> VIEWS
+
+    subgraph VIEWS["⑤ ONE REPORT, MANY VIEWPOINTS"]
+        direction LR
+        V1["By pillar"]
+        V2["By level"]
+        V3["By business goal<br/>(C-suite narrative)"]
+        V4["By account / region / app"]
+    end
+
+    VIEWS --> REMED
+
+    subgraph REMED["⑥ REMEDIATION (human-in-the-loop)"]
+        direction LR
+        RUN["SSM runbook"]
+        CLI["CLI script"]
+        GUI["Guided console walkthrough"]
+        PR["Updated IaC → PR + pipeline"]
+    end
+
+    REMED --> HUMAN["👤 Human reviews, approves, deploys"]
+    HUMAN -. "weekly re-scan confirms closure" .-> ENGINE
+
+    classDef excluded fill:#e5e7eb,stroke:#9ca3af,color:#6b7280,stroke-dasharray:4 3;
+    class OE,SU excluded;
+    classDef human fill:#fef3c7,stroke:#d97706,color:#92400e;
+    class HUMAN human;
 ```
 
 **The flow in plain terms:**
@@ -111,6 +195,51 @@ Two role types, both **read-only by design**:
 6. Review, then remediate (§7).
 
 Programmatic access is available through the `wellarchitected` API namespace and CLI, so adoption can be scripted/GitOps-driven.
+
+---
+
+## 4.5 Inputs reference — exactly what you pass to the agent
+
+This is the field-by-field view a principal engineer needs to actually configure the agent. The inputs fall into four groups.
+
+### A. Agent profile (the primary configuration entity)
+
+| Input | What you specify | Notes / limits |
+|-------|------------------|----------------|
+| **Accounts** | The AWS account IDs to analyze | Up to **100 accounts** per profile |
+| **Regions** | Which Regions to scan | Scans **all commercial Regions**; the profile is *hosted* only in us-east-1, us-east-2, or us-west-2 |
+| **Pillars** | Which of the four to analyze | Cost · Security · Reliability · Performance — all or a subset |
+| **Business goals** | Plain-language optimization statements | Each goal **maps to one pillar** and drives ranking. e.g. *"reduce non-production spend by 30%"*, *"harden the payments platform"*, *"ensure tier-1 apps survive an AZ failure"* |
+| **Execution role** | The read-only IAM role in the profile's account | Its only power is to assume the per-account access roles |
+
+### B. Application context (personalization — the biggest lever on recommendation quality)
+
+The "garbage in, generic out" input. The more you supply here, the less generic the output.
+
+| Input | What you specify | Why it matters |
+|-------|------------------|----------------|
+| **Criticality** | Tier/importance (e.g. tier-1, mission-critical, dev/test) | Lets the agent weigh resilience/security harder on critical apps |
+| **Industry** | Your sector (e.g. fintech, healthcare, retail) | Shapes compliance-flavored recommendations |
+| **Tags** | Resource tags that define app boundaries | How the agent groups resources into an "application" for app-level findings |
+| **Topology / architecture overview** | How components relate to each other | Enables application-level (beta) reasoning about interactions, not just single resources |
+
+### C. IAM / access inputs (per scanned account)
+
+| Input | What you specify | Notes |
+|-------|------------------|-------|
+| **Access role** | A read-only role in **each** scanned account | Uses the `WellArchitectedAgentResourceScanning` managed policy |
+| **Trust policy** | Links each access role back to the execution role | So the execution role can assume it to orchestrate discovery |
+
+### D. Architecture-review inputs (on-demand, the "shift-left" path)
+
+| Input | What you specify | Notes |
+|-------|------------------|-------|
+| **IaC source** | An **S3 URI** of your templates, or an uploaded template | Terraform, CloudFormation, or CDK |
+| **Pillars to apply** | Which pillars to evaluate the IaC against | Returns **deployment-ready corrected templates** |
+
+### Not configuration fields, but required inputs to the decision
+- **Support tier eligibility** — a hard gate, not a form field: **Business+, Enterprise On-Ramp, Enterprise, or Unified Operations**. Developer/Business tiers are blocked.
+- **Cadence is fixed, not set by you** — first results in **~24 hours**, scheduled recommendations refresh **weekly**. There is no "schedule" field to configure.
 
 ---
 
