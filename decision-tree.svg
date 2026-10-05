@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="'Segoe UI', Arial, sans-serif" role="img" aria-label="When to use the AWS Well-Architected Agent decision tree">
+  <defs>
+    <marker id="d" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8aa0b6"/></marker>
+    <filter id="ds" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0b1a2a" flood-opacity="0.25"/></filter>
+    <style>
+      .q{font-size:12.5px;font-weight:700;fill:#15233a}
+      .lbl{font-size:11px;font-weight:700;fill:#5a6b7b}
+      .yes{font-size:11px;font-weight:800;fill:#1f9f6a}
+      .no{font-size:11px;font-weight:800;fill:#c0392b}
+      .edge{stroke:#8aa0b6;stroke-width:1.8;fill:none}
+      .outGood{font-size:12px;font-weight:800;fill:#0f7a56}
+      .outWait{font-size:12px;font-weight:800;fill:#b8541f}
+    </style>
+  </defs>
+
+  <rect width="1200" height="560" rx="16" fill="#f5f8fc"/>
+  <text x="34" y="42" font-size="22" font-weight="800" fill="#15233a">Should you adopt the WA Agent now? — a decision flow</text>
+
+  <!-- Q1 support tier -->
+  <rect x="430" y="70" width="340" height="60" rx="12" fill="#fff" stroke="#2f82d8" stroke-width="1.8" filter="url(#ds)"/>
+  <text x="600" y="96" text-anchor="middle" class="q">On AWS Support Business+ or higher?</text>
+  <text x="600" y="114" text-anchor="middle" class="lbl">(Business+ / Enterprise On-Ramp / Enterprise / Unified Ops)</text>
+
+  <!-- Q1 NO -> wait -->
+  <path d="M430,100 H250 V150" class="edge" marker-end="url(#d)"/>
+  <text x="330" y="92" class="no">NO</text>
+  <rect x="120" y="150" width="260" height="64" rx="12" fill="#fff3e8" stroke="#ec7211" filter="url(#ds)"/>
+  <text x="250" y="178" text-anchor="middle" class="outWait">Not eligible yet</text>
+  <text x="250" y="198" text-anchor="middle" class="lbl">Upgrade support tier, or use Trusted Advisor + WA Tool</text>
+
+  <!-- Q1 YES -> Q2 -->
+  <path d="M600,130 V170" class="edge" marker-end="url(#d)"/>
+  <text x="612" y="152" class="yes">YES</text>
+
+  <!-- Q2 scale -->
+  <rect x="430" y="170" width="340" height="60" rx="12" fill="#fff" stroke="#2f82d8" stroke-width="1.8" filter="url(#ds)"/>
+  <text x="600" y="196" text-anchor="middle" class="q">Many accounts / workloads, or ongoing</text>
+  <text x="600" y="214" text-anchor="middle" class="q">cost·security·resilience push?</text>
+
+  <!-- Q2 NO -> small -->
+  <path d="M770,200 H960 V250" class="edge" marker-end="url(#d)"/>
+  <text x="860" y="192" class="no">NO</text>
+  <rect x="840" y="250" width="300" height="64" rx="12" fill="#fff3e8" stroke="#ec7211" filter="url(#ds)"/>
+  <text x="990" y="278" text-anchor="middle" class="outWait">Optional</text>
+  <text x="990" y="298" text-anchor="middle" class="lbl">Fine for a one-off review; biggest value is at scale</text>
+
+  <!-- Q2 YES -> Q3 -->
+  <path d="M600,230 V270" class="edge" marker-end="url(#d)"/>
+  <text x="612" y="252" class="yes">YES</text>
+
+  <!-- Q3 need shift-left? -->
+  <rect x="430" y="270" width="340" height="60" rx="12" fill="#fff" stroke="#2f82d8" stroke-width="1.8" filter="url(#ds)"/>
+  <text x="600" y="296" text-anchor="middle" class="q">Want to catch issues in IaC</text>
+  <text x="600" y="314" text-anchor="middle" class="q">(Terraform / CFN / CDK) before deploy?</text>
+
+  <!-- Q3 both branches lead to adopt, with emphasis -->
+  <path d="M600,330 V370" class="edge" marker-end="url(#d)"/>
+  <text x="612" y="352" class="yes">YES</text>
+  <path d="M430,300 H250 V370" class="edge" marker-end="url(#d)"/>
+  <text x="330" y="292" class="no">NO — still fine</text>
+
+  <!-- adopt box -->
+  <rect x="360" y="370" width="480" height="80" rx="12" fill="#eafaf3" stroke="#15a877" stroke-width="2" filter="url(#ds)"/>
+  <text x="600" y="400" text-anchor="middle" class="outGood" font-size="15">✅ Adopt — create an agent profile</text>
+  <text x="600" y="422" text-anchor="middle" class="lbl">Define business goals + app context · set read-only IAM roles</text>
+  <text x="600" y="440" text-anchor="middle" class="lbl">Review recommendations → remediate with human approval</text>
+
+  <!-- left NO path also points to adopt (resource/app levels still useful) -->
+  <rect x="120" y="370" width="200" height="80" rx="12" fill="#eef7ff" stroke="#2f82d8" filter="url(#ds)"/>
+  <text x="220" y="400" text-anchor="middle" class="lbl" font-weight="800" fill="#1f69bf">Use live-env analysis</text>
+  <text x="220" y="420" text-anchor="middle" class="lbl">resource + application</text>
+  <text x="220" y="438" text-anchor="middle" class="lbl">levels on deployed infra</text>
+  <path d="M320,410 H358" class="edge" marker-end="url(#d)"/>
+
+  <text x="600" y="500" text-anchor="middle" class="lbl">Reminder: the agent is advisory + assisted remediation. It never changes resources on its own — a human approves and deploys every fix.</text>
+  <text x="1166" y="536" text-anchor="end" class="lbl" font-style="italic">by eswaran-hariharan</text>
+</svg>

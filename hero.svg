@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" font-family="'Segoe UI', Arial, sans-serif" role="img" aria-label="AWS Well-Architected Agent hero banner">
+  <defs>
+    <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101a2b"/><stop offset="0.55" stop-color="#162436"/><stop offset="1" stop-color="#231a0e"/>
+    </linearGradient>
+    <linearGradient id="haccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ec7211"/><stop offset="1" stop-color="#f0a858"/>
+    </linearGradient>
+    <radialGradient id="horb" cx="0.5" cy="0.4" r="0.6"><stop offset="0" stop-color="#ec7211" stop-opacity=".28"/><stop offset="1" stop-color="#ec7211" stop-opacity="0"/></radialGradient>
+    <filter id="hsh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/></filter>
+  </defs>
+  <rect width="1200" height="420" rx="16" fill="url(#hbg)"/>
+  <circle cx="980" cy="120" r="260" fill="url(#horb)"/>
+  <rect x="0" y="0" width="1200" height="7" fill="url(#haccent)"/>
+
+  <rect x="64" y="54" width="300" height="34" rx="17" fill="#2a2113" stroke="#5a4320"/>
+  <text x="84" y="77" font-size="14" font-weight="800" fill="#f0a858" letter-spacing="1">AWS · PREVIEW · OCT 2026</text>
+
+  <text x="64" y="150" font-size="46" font-weight="800" fill="#ffffff">AWS Well-Architected Agent</text>
+  <text x="64" y="196" font-size="21" fill="#9fb4c7">The next-gen evolution of Trusted Advisor + the Well-Architected Tool —</text>
+  <text x="64" y="224" font-size="21" fill="#9fb4c7">continuous, AI-powered, goal-ranked cloud optimization.</text>
+
+  <!-- 4 pillar chips -->
+  <g filter="url(#hsh)" font-size="14" font-weight="700">
+    <rect x="64" y="268" width="150" height="48" rx="10" fill="#15314a"/><text x="139" y="297" text-anchor="middle" fill="#8fd0ff">Cost</text>
+    <rect x="226" y="268" width="150" height="48" rx="10" fill="#3a1530"/><text x="301" y="297" text-anchor="middle" fill="#ff9ec4">Security</text>
+    <rect x="388" y="268" width="150" height="48" rx="10" fill="#13303a"/><text x="463" y="297" text-anchor="middle" fill="#7fe6d2">Resilience</text>
+    <rect x="550" y="268" width="150" height="48" rx="10" fill="#2a2a14"/><text x="625" y="297" text-anchor="middle" fill="#f0e07a">Performance</text>
+  </g>
+
+  <!-- 3 levels -->
+  <text x="64" y="356" font-size="14" fill="#8ea3b8">Recommendations at 3 levels:</text>
+  <text x="250" y="356" font-size="14" font-weight="700" fill="#f0a858">Resource · Application · Architecture</text>
+
+  <text x="64" y="392" font-size="13" fill="#64788c">Continuous (weekly) · goal-ranked by impact × effort · with ready-to-run SSM / CLI / IaC fixes · human stays in the loop</text>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="'Segoe UI', Arial, sans-serif" role="img" aria-label="AWS Well-Architected Agent architecture and flow">
+  <defs>
+    <marker id="wa" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8aa0b6"/></marker>
+    <filter id="was" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0b1a2a" flood-opacity="0.3"/></filter>
+    <style>
+      .h{font-size:13px;font-weight:800;letter-spacing:.5px}
+      .b{font-size:12.5px;font-weight:700;fill:#15233a}
+      .s{font-size:10px;fill:#45586c}
+      .w{font-size:12px;font-weight:700;fill:#fff}
+      .ws{font-size:9.5px;fill:#eef}
+      .note{font-size:11px;fill:#5a6b7b}
+      .edge{stroke:#8aa0b6;stroke-width:2;fill:none}
+    </style>
+  </defs>
+
+  <rect width="1200" height="560" rx="16" fill="#f5f8fc"/>
+  <text x="34" y="42" font-size="23" font-weight="800" fill="#15233a">How the AWS Well-Architected Agent Works</text>
+  <text x="34" y="66" font-size="13" fill="#5a6b7b">Read-only discovery → AI analysis vs best practices → goal-ranked recommendations → human-approved remediation.</text>
+
+  <!-- STEP 1: You define -->
+  <text x="40" y="104" class="h" fill="#2f82d8">① YOU DEFINE (ONCE)</text>
+  <rect x="40" y="116" width="250" height="150" rx="12" fill="#eaf2fd" stroke="#2f82d8" filter="url(#was)"/>
+  <rect x="58" y="134" width="214" height="50" rx="8" fill="#2f82d8"/><text x="165" y="155" text-anchor="middle" class="w">Agent Profile</text><text x="165" y="172" text-anchor="middle" class="ws">accounts · regions · pillars · goals</text>
+  <rect x="58" y="194" width="214" height="54" rx="8" fill="#dbeafe" stroke="#2f82d8"/><text x="165" y="215" text-anchor="middle" class="b">Application Context</text><text x="165" y="232" text-anchor="middle" class="s">criticality · industry · tags · topology</text>
+
+  <!-- STEP 2: Engine -->
+  <text x="330" y="104" class="h" fill="#ec7211">② AWS WA AGENT — AI ENGINE</text>
+  <rect x="330" y="116" width="470" height="340" rx="12" fill="#fdf2e7" stroke="#ec7211" stroke-width="2" filter="url(#was)"/>
+
+  <rect x="352" y="140" width="426" height="50" rx="8" fill="#ec7211"/><text x="565" y="161" text-anchor="middle" class="w">Scan resources (READ-ONLY)</text><text x="565" y="178" text-anchor="middle" class="ws">60+ services · up to 100 accounts · all commercial Regions</text>
+
+  <rect x="352" y="202" width="426" height="50" rx="8" fill="#f0883e"/><text x="565" y="223" text-anchor="middle" class="w">Analyze vs Well-Architected best practices</text><text x="565" y="240" text-anchor="middle" class="ws">correlate metrics + topology · ingest Trusted Advisor</text>
+
+  <rect x="352" y="264" width="426" height="50" rx="8" fill="#f59b55"/><text x="565" y="285" text-anchor="middle" class="w">Rank by YOUR business goals</text><text x="565" y="302" text-anchor="middle" class="ws">impact × effort · cross-pillar + trade-off analysis</text>
+
+  <!-- three levels -->
+  <rect x="352" y="330" width="134" height="54" rx="8" fill="#fff" stroke="#c75e0e"/><text x="419" y="352" text-anchor="middle" class="b">Resource</text><text x="419" y="368" text-anchor="middle" class="s">one resource</text>
+  <rect x="498" y="330" width="134" height="54" rx="8" fill="#fff" stroke="#c75e0e"/><text x="565" y="352" text-anchor="middle" class="b">Application</text><text x="565" y="368" text-anchor="middle" class="s">beta · related set</text>
+  <rect x="644" y="330" width="134" height="54" rx="8" fill="#fff" stroke="#c75e0e"/><text x="711" y="352" text-anchor="middle" class="b">Architecture</text><text x="711" y="368" text-anchor="middle" class="s">from IaC</text>
+  <text x="565" y="414" text-anchor="middle" class="note">Three recommendation levels</text>
+  <text x="565" y="434" text-anchor="middle" class="note" font-style="italic">The agent cannot modify anything — discovery &amp; advice only.</text>
+
+  <!-- STEP 3: Remediate + human -->
+  <text x="840" y="104" class="h" fill="#15a877">③ ACT (HUMAN-APPROVED)</text>
+  <rect x="840" y="116" width="326" height="340" rx="12" fill="#eafaf3" stroke="#15a877" stroke-width="2" filter="url(#was)"/>
+
+  <rect x="862" y="140" width="282" height="92" rx="8" fill="#d6f3e5" stroke="#15a877"/>
+  <text x="878" y="164" class="b" fill="#0f7a56">Ready-to-deploy remediation</text>
+  <text x="878" y="186" class="s">• SSM runbook (automated change)</text>
+  <text x="878" y="204" class="s">• Prescriptive CLI script</text>
+  <text x="878" y="222" class="s">• Guided console walkthrough / updated IaC</text>
+
+  <rect x="862" y="246" width="282" height="56" rx="8" fill="#15a877"/><text x="1003" y="270" text-anchor="middle" class="w">👤 Human reviews &amp; approves</text><text x="1003" y="288" text-anchor="middle" class="ws">read trade-offs · accept / defer / dismiss</text>
+
+  <rect x="862" y="316" width="282" height="50" rx="8" fill="#bfe9d6" stroke="#0f7a56"/><text x="1003" y="347" text-anchor="middle" class="b" fill="#0f7a56">Deploy via pipeline / SSM</text>
+
+  <rect x="862" y="380" width="282" height="56" rx="8" fill="#fff" stroke="#9fd9c2"/><text x="1003" y="402" text-anchor="middle" class="s">Re-scan confirms closure</text><text x="1003" y="420" text-anchor="middle" class="s">weekly cadence · first results ~24h</text>
+
+  <!-- arrows -->
+  <g class="edge">
+    <path d="M290,191 H328" marker-end="url(#wa)"/>
+    <path d="M800,260 H838" marker-end="url(#wa)"/>
+  </g>
+
+  <!-- access note -->
+  <text x="34" y="300" class="note" font-weight="700" fill="#2f82d8">IAM:</text>
+  <text x="78" y="300" class="note">Execution role (assumes access roles) + per-account Access roles — both READ-ONLY.</text>
+  <text x="34" y="320" class="note">Views: by pillar · by level · by business goal · by account/Region — one report, many viewpoints (engineer ↔ leadership).</text>
+  <text x="34" y="520" class="note" font-style="italic">Preview (Oct 2026) · requires AWS Support Business+ or higher · profile hosted in us-east-1 / us-east-2 / us-west-2.  ·  by eswaran-hariharan</text>
+</svg>
